@@ -7,9 +7,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>Final project</title>
 </head>
 <body>
-    <span>Final project</span>
+    <header>
+        <h1>Final project</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="rank.php">Rank</a></li>
+            </ul>
+        </nav>
+    </header>
 </body>
 </html>
