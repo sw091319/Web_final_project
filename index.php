@@ -7,17 +7,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="game.js" type="module"></script>
     <title>Final project</title>
 </head>
 <body>
     <header>
-        <h1>Final project</h1>
+        <!-- <img src="./img/logo.webp" alt="logo" weight="55px" height="55px"> -->
+        <h1>Growing a farm</h1>
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="rank.php">Rank</a></li>
+                <li><a href="rank.php">Login</a></li>
             </ul>
         </nav>
     </header>
+    <main>
+        <canvas id="game"></canvas>
+    </main>
 </body>
 </html>
