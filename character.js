@@ -6,6 +6,7 @@ export const character = {
     down : false,
     left : false,
     right : false,
+    use_item : false,
     x : 50,
     y : 50,
     laststate : "front",

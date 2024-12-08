@@ -25,6 +25,9 @@ window.addEventListener('keydown', (e) => {
     if(e.key === 'd') {
         character.right = true;
     }
+    if(e.key === 'space') {
+        console.log("space");
+    }
 });
 window.addEventListener('keyup', (e) => {
     if(e.key === 'w') {
