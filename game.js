@@ -1,5 +1,6 @@
-import { grass } from './ground.js';
+import { grass } from './grass.js';
 import { character } from './character.js';
+import { ground } from './ground.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -53,6 +54,7 @@ function init() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrass();
+    drawGround();
     drawCharacter();
     
 }
@@ -77,6 +79,31 @@ function drawGrass() {
     }
 }
 
+function drawGround() {
+    function getHorizontal(x) {
+        if(x === 900/68) return "left";
+        if(10+(68*x) >= canvas.width-136) return "right";
+        return "center";
+    }
+
+    function getVertical(y) {
+        if(y === 50/68) return "Top";
+        if(10+(68*y) >= canvas.height-136) return "Bottom";
+        return "Middle";
+    }
+
+    for(let i = 900/68; 10 + 68*i < canvas.width - 68; i++) {
+        for(let j = 50/68; 10 + 68*j < canvas.height-68; j++) {
+            ctx.drawImage(ground.img, ...ground[getHorizontal(i) + getVertical(j)], 10+(68*i), 10+(68*j), 68, 68);
+            if (character.x+34 > 10+(68*i) && character.x+34 < 10+(68*i)+68 && character.y+68 > 10+(68*j) && character.y+68 < 10+(68*j)+68) {
+                ctx.fillStyle = "rgba(80, 80, 255, 0.3)";
+                ctx.fillRect(10+(68*i), 10+(68*j), 68, 68);
+            }
+        }
+    }
+
+
+}
 
 function move() {
     if(character.left) {
