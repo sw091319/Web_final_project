@@ -1,6 +1,7 @@
 import { grass } from './grass.js';
 import { character } from './character.js';
 import { ground } from './ground.js';
+import { inventory } from './inventory.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -26,7 +27,7 @@ window.addEventListener('keydown', (e) => {
         character.right = true;
     }
     if(e.key === 'space') {
-        console.log("space");
+        character.use_item = true;
     }
 });
 window.addEventListener('keyup', (e) => {
@@ -58,6 +59,7 @@ function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrass();
     drawGround();
+    drawInventory();
     drawCharacter();
     
 }
@@ -105,12 +107,14 @@ function drawGround() {
         }
     }
 
-
+}
+function drawInventory() {
+    ctx.drawImage(inventory.img, ...inventory.inventory, 10, canvas.height-184, 686, 184);
 }
 
 function move() {
     if(character.left) {
-        if (character.x > 20) {
+        if (character. x > 700 || (character.x > 20 && character.y < canvas.height - 255)) {
             character.x -= 4;
         }
     }
@@ -125,7 +129,7 @@ function move() {
         }
     }
     if(character.down) {
-        if (character.y < canvas.height - 80) {
+        if (character.y < canvas.height - 255 || (character. x > 650 && character.y < canvas.height - 80)) {
             character.y += 4;
         }
     }
