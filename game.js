@@ -2,6 +2,7 @@ import { grass } from './grass.js';
 import { character } from './character.js';
 import { ground } from './ground.js';
 import { inventory } from './inventory.js';
+import { crop } from './crops.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -110,6 +111,11 @@ function drawGround() {
 }
 function drawInventory() {
     ctx.drawImage(inventory.img, ...inventory.inventory, 10, canvas.height-184, 686, 184);
+    ctx.drawImage(crop.img, ...crop.wheat_pack, 34, canvas.height-115, 58, 58);
+    ctx.fillStyle = "rgba(255, 100, 40, 0.25)";
+    ctx.fillRect(34, canvas.height-115, 64, 64);
+    ctx.drawImage(crop.img, ...crop.beat_pack, 34+96, canvas.height-115, 58, 58);
+
 }
 
 function move() {
