@@ -1,8 +1,9 @@
-import { grass } from './grass.js';
-import { character } from './character.js';
-import { ground } from './ground.js';
-import { inventory } from './inventory.js';
-import { crop } from './crops.js';
+import { drawGrass } from './grass.js';
+import { move, drawCharacter } from './character.js';
+import { drawGround } from './ground.js';
+import { drawInventory, inventory } from './inventory.js';
+import { drawCrop } from './crops.js';
+import { keyboardActions } from './keyboard.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -15,207 +16,37 @@ function resize() {
 
 window.addEventListener('resize', resize);
 window.addEventListener('keydown', (e) => {
-    if(e.key === 'w') {
-        character.up = true;
-    }
-    if(e.key === 'a') {
-        character.left = true;
-    }
-    if(e.key === 's') {
-        character.down = true;
-    }
-    if(e.key === 'd') {
-        character.right = true;
-    }
-    if(e.key === ' ') {
-        character.use_item = true;
-    }
+    keyboardActions.forEach(action => {
+        if(e.key === action.key) {
+            action.down();
+        }
+    });
 });
+
 window.addEventListener('keyup', (e) => {
-    if(e.key === 'w') {
-        character.up = false;
-        character.laststate = "back";
-    }
-    if(e.key === 'a') {
-        character.left = false;
-        character.laststate = "left";
-    }
-    if(e.key === 's') {
-        character.down = false;
-        character.laststate = "front";
-    }
-    if(e.key === 'd') {
-        character.right = false;
-        character.laststate = "right";
-    }
-    if(e.key === '1') {
-        inventory.inventory_number = 1;
-    }
-    if(e.key === '2') {
-        inventory.inventory_number = 2;
-    }
-    if(e.key === ' ') {
-        character.use_item = false;
-    }
+    keyboardActions.forEach(action => {
+        if(e.key === action.key) {
+            action.up?.();
+        }
+    });
 });
 
 function init() {
     resize();
     window.setInterval(drawGame, 1000 / 60);
-    window.setInterval(move, 1000 / 60);
+    window.setInterval(move(canvas), 1000 / 60);
 }
 
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrass();
-    drawGround();
-    drawInventory();
-    drawCharacter();
-    
+    drawGrass({ctx, canvas});
+    drawGround({ctx});
+    drawInventory({ctx, canvas});
+    drawCrop({ctx});
+    drawCharacter({ctx});
 }
 
-function drawGrass() {
-    function getHorizontal(x) {
-        if(x === 0) return "left";
-        if(10+(30*x) >= canvas.width-30) return "right";
-        return "center";
-    }
-    
-    function getVertical(y) {
-        if(y === 0) return "Top";
-        if(10+(30*y) >= canvas.height-30) return "Bottom";
-        return "Middle";
-    }
-
-    for(let i = 0; 10 + 30*i < canvas.width; i++) {
-        for(let j = 0; 10 + 30*j < canvas.height; j++) {
-            ctx.drawImage(grass.img, ...grass[getHorizontal(i) + getVertical(j)], 10+(30*i), 10+(30*j), 30, 30);
-        }
-    }
-}
-
-function drawGround() {
-    function getHorizontal(x) {
-        if(x === 900/68) return "left";
-        if(10+(68*x) >= canvas.width-136) return "right";
-        return "center";
-    }
-
-    function getVertical(y) {
-        if(y === 50/68) return "Top";
-        if(10+(68*y) >= canvas.height-136) return "Bottom";
-        return "Middle";
-    }
-
-    for(let i = 900/68; 10 + 68*i < canvas.width - 68; i++) {
-        for(let j = 50/68; 10 + 68*j < canvas.height-68; j++) {
-            ctx.drawImage(ground.img, ...ground[getHorizontal(i) + getVertical(j)], 10+(68*i), 10+(68*j), 68, 68);
-            if (character.x+34 > 10+(68*i) && character.x+34 < 10+(68*i)+68 && character.y+68 > 10+(68*j) && character.y+68 < 10+(68*j)+68) {
-                ctx.fillStyle = "rgba(80, 80, 255, 0.3)";
-                ctx.fillRect(10+(68*i), 10+(68*j), 68, 68);
-                if(character.use_item) {
-                    if(character.seeds.some(seed=>seed.x === i && seed.y === j)) {
-                        continue;
-                    }
-                    switch(inventory.inventory_number) {
-                        case 1:
-                            character.seeds.push({x: i, y: j, grow: 0, type: "wheat"});
-                            break;
-                        case 2:
-                            character.seeds.push({x: i, y: j, grow: 0, type: "beat"});
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
-    character.seeds.forEach(seed => {
-        switch(seed.type) {
-            case "wheat":
-                if(seed.grow === 0) {
-                    ctx.drawImage(crop.img, ...crop.wheat_seed, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 1) {
-                    ctx.drawImage(crop.img, ...crop.wheat_grow1, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 2) {
-                    ctx.drawImage(crop.img, ...crop.wheat_grow2, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 3) {
-                    ctx.drawImage(crop.img, ...crop.wheat_full, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                }
-                break;
-            case "beat":
-                if(seed.grow === 0) {
-                    ctx.drawImage(crop.img, ...crop.beat_seed, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 1) {
-                    ctx.drawImage(crop.img, ...crop.beat_grow1, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 2) {
-                    ctx.drawImage(crop.img, ...crop.beat_grow2, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 3) {
-                    ctx.drawImage(crop.img, ...crop.beat_full, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                }
-                break;
-        }
-    });
-
-}
-function drawInventory() {
-    ctx.drawImage(inventory.img, ...inventory.inventory, 10, canvas.height-184, 686, 184);
-    ctx.drawImage(crop.img, ...crop.wheat_pack, 34, canvas.height-115, 58, 58);
-    ctx.drawImage(crop.img, ...crop.beat_pack, 34+96, canvas.height-115, 58, 58);
-    switch(inventory.inventory_number) {
-        case 1:
-            ctx.fillStyle = "rgba(255, 100, 40, 0.25)";
-            ctx.fillRect(34, canvas.height-115, 64, 64);
-            break;
-        case 2:
-            ctx.fillStyle = "rgba(255, 100, 40, 0.25)";
-            ctx.fillRect(34+96, canvas.height-115, 64, 64);
-            break;
-    }
-
-}
-
-function move() {
-    if(character.left) {
-        if (character. x > 700 || (character.x > 20 && character.y < canvas.height - 250)) {
-            character.x -= 4;
-        }
-    }
-    if(character.right) {
-        if (character.x < canvas.width - 75) {
-            character.x += 4;
-        }
-    }
-    if(character.up) {
-        if (character.y > 20) {
-            character.y -= 4;
-        }
-    }
-    if(character.down) {
-        if (character.y < canvas.height - 255 || (character. x > 650 && character.y < canvas.height - 80)) {
-            character.y += 4;
-        }
-    }
-}
-
-function drawCharacter() {
-    character.tick=(character.tick+1)%50;
-
-    function getDirection() {
-        if(character.up) return "back_move";
-        if(character.down) return "front_move";
-        if(character.left) return "left_move";
-        if(character.right) return "right_move";
-        return character.laststate + "_basic";
-    }
-
-    if (character.tick < 25) {
-        ctx.drawImage(character.img, ...character[getDirection()+"1"], character.x, character.y, 68, 68);
-    } else {
-        ctx.drawImage(character.img, ...character[getDirection()+"2"], character.x, character.y, 68, 68);
-    }
-    return;
-
-}
+export const getLastWidthIndex = () => Math.floor((canvas.width - 88) / 68);
+export const getLastHeightIndex = () => Math.floor((canvas.height - 88) / 68);
 
 init();

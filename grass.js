@@ -14,3 +14,22 @@ export const grass = {
     rightBottom: [32, 32, 15, 15]
 }
 
+export function drawGrass({ctx, canvas}) {
+    function getHorizontal(x) {
+        if(x === 0) return "left";
+        if(10+(30*x) >= canvas.width-30) return "right";
+        return "center";
+    }
+    
+    function getVertical(y) {
+        if(y === 0) return "Top";
+        if(10+(30*y) >= canvas.height-30) return "Bottom";
+        return "Middle";
+    }
+
+    for(let i = 0; 10 + 30*i < canvas.width; i++) {
+        for(let j = 0; 10 + 30*j < canvas.height; j++) {
+            ctx.drawImage(grass.img, ...grass[getHorizontal(i) + getVertical(j)], 10+(30*i), 10+(30*j), 30, 30);
+        }
+    }
+}
