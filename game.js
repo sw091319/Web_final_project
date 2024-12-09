@@ -48,6 +48,12 @@ window.addEventListener('keyup', (e) => {
         character.right = false;
         character.laststate = "right";
     }
+    if(e.key === '1') {
+        inventory.inventory_number = 1;
+    }
+    if(e.key === '2') {
+        inventory.inventory_number = 2;
+    }
 });
 
 function init() {
@@ -112,9 +118,17 @@ function drawGround() {
 function drawInventory() {
     ctx.drawImage(inventory.img, ...inventory.inventory, 10, canvas.height-184, 686, 184);
     ctx.drawImage(crop.img, ...crop.wheat_pack, 34, canvas.height-115, 58, 58);
-    ctx.fillStyle = "rgba(255, 100, 40, 0.25)";
-    ctx.fillRect(34, canvas.height-115, 64, 64);
     ctx.drawImage(crop.img, ...crop.beat_pack, 34+96, canvas.height-115, 58, 58);
+    switch(inventory.inventory_number) {
+        case 1:
+            ctx.fillStyle = "rgba(255, 100, 40, 0.25)";
+            ctx.fillRect(34, canvas.height-115, 64, 64);
+            break;
+        case 2:
+            ctx.fillStyle = "rgba(255, 100, 40, 0.25)";
+            ctx.fillRect(34+96, canvas.height-115, 64, 64);
+            break;
+    }
 
 }
 

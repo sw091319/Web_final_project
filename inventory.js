@@ -3,5 +3,6 @@ inventoryimg.src = './img/emojis-free/emoji style ui/inventory_Light_example_wit
 
 export const inventory = {
     img: inventoryimg,
+    inventory_number: 1,
     inventory: [3, 1, 343, 92]
 }
