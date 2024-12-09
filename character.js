@@ -11,6 +11,7 @@ export const character = {
     y : 50,
     laststate : "front",
     tick : 0,
+    seeds: [],
     img: characterimg,
     front_basic1: [16, 15, 17, 17],
     front_basic2: [64, 15, 17, 17],

@@ -27,7 +27,7 @@ window.addEventListener('keydown', (e) => {
     if(e.key === 'd') {
         character.right = true;
     }
-    if(e.key === 'space') {
+    if(e.key === ' ') {
         character.use_item = true;
     }
 });
@@ -53,6 +53,9 @@ window.addEventListener('keyup', (e) => {
     }
     if(e.key === '2') {
         inventory.inventory_number = 2;
+    }
+    if(e.key === ' ') {
+        character.use_item = false;
     }
 });
 
@@ -110,9 +113,49 @@ function drawGround() {
             if (character.x+34 > 10+(68*i) && character.x+34 < 10+(68*i)+68 && character.y+68 > 10+(68*j) && character.y+68 < 10+(68*j)+68) {
                 ctx.fillStyle = "rgba(80, 80, 255, 0.3)";
                 ctx.fillRect(10+(68*i), 10+(68*j), 68, 68);
+                if(character.use_item) {
+                    if(character.seeds.some(seed=>seed.x === i && seed.y === j)) {
+                        continue;
+                    }
+                    switch(inventory.inventory_number) {
+                        case 1:
+                            character.seeds.push({x: i, y: j, grow: 0, type: "wheat"});
+                            break;
+                        case 2:
+                            character.seeds.push({x: i, y: j, grow: 0, type: "beat"});
+                            break;
+                    }
+                }
             }
         }
     }
+
+    character.seeds.forEach(seed => {
+        switch(seed.type) {
+            case "wheat":
+                if(seed.grow === 0) {
+                    ctx.drawImage(crop.img, ...crop.wheat_seed, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                } else if(seed.grow === 1) {
+                    ctx.drawImage(crop.img, ...crop.wheat_grow1, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                } else if(seed.grow === 2) {
+                    ctx.drawImage(crop.img, ...crop.wheat_grow2, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                } else if(seed.grow === 3) {
+                    ctx.drawImage(crop.img, ...crop.wheat_full, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                }
+                break;
+            case "beat":
+                if(seed.grow === 0) {
+                    ctx.drawImage(crop.img, ...crop.beat_seed, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                } else if(seed.grow === 1) {
+                    ctx.drawImage(crop.img, ...crop.beat_grow1, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                } else if(seed.grow === 2) {
+                    ctx.drawImage(crop.img, ...crop.beat_grow2, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                } else if(seed.grow === 3) {
+                    ctx.drawImage(crop.img, ...crop.beat_full, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
+                }
+                break;
+        }
+    });
 
 }
 function drawInventory() {
@@ -134,7 +177,7 @@ function drawInventory() {
 
 function move() {
     if(character.left) {
-        if (character. x > 700 || (character.x > 20 && character.y < canvas.height - 255)) {
+        if (character. x > 700 || (character.x > 20 && character.y < canvas.height - 250)) {
             character.x -= 4;
         }
     }
