@@ -55,13 +55,18 @@ export const keyboardActions = [
             if (character.seeds.some(seed => seed.x === characterWidthIndex && seed.y === characterHeightIndex)) {
                 const seed = character.seeds.find(seed => seed.x === characterWidthIndex && seed.y === characterHeightIndex);
                 if (getCropLevel(seed.type, seed.grow) !== "full") return;
+                if (seed.type === "wheat") {
+                    character.coin += 2;
+                } else if (seed.type === "beat") {
+                    character.coin += 5;
+                }
                 character.seeds = character.seeds.filter(seed => seed.x !== characterWidthIndex || seed.y !== characterHeightIndex);
                 return;
             }
-            if(inventory.inventory_number === 1) {
+            if(inventory.inventory_index === 1) {
                 character.seeds.push({x: characterWidthIndex, y: characterHeightIndex, type: "wheat", grow: 0});
             }
-            if(inventory.inventory_number === 2) {
+            if(inventory.inventory_index === 2) {
                 character.seeds.push({x: characterWidthIndex, y: characterHeightIndex, type: "beat", grow: 0});
             }
         }
@@ -69,13 +74,13 @@ export const keyboardActions = [
     {
         key: '1',
         down: () => {
-            inventory.inventory_number = 1;
+            inventory.inventory_index = 0;
         }
     },
     {
         key: '2',
         down: () => {
-            inventory.inventory_number = 2;
+            inventory.inventory_index = 1;
         }
     }
 ]
