@@ -8,7 +8,8 @@ export const ui = {
 
 export const ingameUiLocation = (canvas) => ({
     inventory_ui : [10, canvas.height-184, 686, 184],
-    coin_ui : [10, 10, 36*4.5, 18*4.5,]
+    coin_ui : [10, 10, 36*4.5, 18*4.5,],
+    shop_ui : [10 + 36*4.5 + 10, 10, (795-772)*3, (124-99)*3]
 });
 
 export function drawUI({ctx}) {

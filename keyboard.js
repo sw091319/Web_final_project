@@ -63,11 +63,13 @@ export const keyboardActions = [
                 character.seeds = character.seeds.filter(seed => seed.x !== characterWidthIndex || seed.y !== characterHeightIndex);
                 return;
             }
-            if(inventory.inventory_index === 1) {
+            if(inventory.inventory_index === 0 && inventory.wheat > 0) {
                 character.seeds.push({x: characterWidthIndex, y: characterHeightIndex, type: "wheat", grow: 0});
+                inventory.wheat--;
             }
-            if(inventory.inventory_index === 2) {
+            if(inventory.inventory_index === 1 && inventory.beat > 0) {
                 character.seeds.push({x: characterWidthIndex, y: characterHeightIndex, type: "beat", grow: 0});
+                inventory.beat--;
             }
         }
     },

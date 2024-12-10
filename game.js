@@ -4,7 +4,8 @@ import { drawGround } from './ground.js';
 import { drawInventory } from './inventory.js';
 import { drawCrop } from './crops.js';
 import { keyboardActions } from './keyboard.js';
-import { drawUI } from './ui.js';
+import { drawUI, ingameUiLocation } from './ui.js';
+import { shop, drawShop } from './shop.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -32,6 +33,20 @@ window.addEventListener('keyup', (e) => {
     });
 });
 
+let isShopClicked = false;
+let shopOpen = false;
+canvas.addEventListener('mousedown', (e) => {
+    const x = e.clientX - canvas.getBoundingClientRect().left;
+    const y = e.clientY - canvas.getBoundingClientRect().top;
+    if (x > ingameUiLocation(canvas).shop_ui[0] && x < ingameUiLocation(canvas).shop_ui[0] + ingameUiLocation(canvas).shop_ui[2] && y > ingameUiLocation(canvas).shop_ui[1] && y < ingameUiLocation(canvas).shop_ui[1] + ingameUiLocation(canvas).shop_ui[3]) {
+        isShopClicked = true;
+        shopOpen = true;
+    }
+});
+canvas.addEventListener('mouseup', (e) => {
+    isShopClicked = false;
+});
+
 function init() {
     resize();
     window.setInterval(drawGame, 1000 / 60);
@@ -45,6 +60,13 @@ function drawGame() {
     drawGround({ctx});
     drawInventory({ctx, canvas});
     drawUI({ctx});
+    //drawShop({ctx, canvas});
+    if(isShopClicked) {
+        ctx.drawImage(shop.img, ...shop.shopClick, 10 + ingameUiLocation(canvas).coin_ui[2] + 10, 12, (795-772)*3, (124-99)*3);
+    }
+    else {
+        ctx.drawImage(shop.img, ...shop.shopUnclick, 10 + ingameUiLocation(canvas).coin_ui[2] + 10, 10, (795-772)*3, (124-99)*3);
+    }
     drawCrop({ctx});
     drawCharacter({ctx});
 }
