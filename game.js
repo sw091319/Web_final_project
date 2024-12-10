@@ -4,6 +4,7 @@ import { drawGround } from './ground.js';
 import { drawInventory } from './inventory.js';
 import { drawCrop } from './crops.js';
 import { keyboardActions } from './keyboard.js';
+import { drawUI } from './ui.js';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -43,6 +44,7 @@ function drawGame() {
     drawGrass({ctx, canvas});
     drawGround({ctx});
     drawInventory({ctx, canvas});
+    drawUI({ctx});
     drawCrop({ctx});
     drawCharacter({ctx});
 }

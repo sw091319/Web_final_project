@@ -5,6 +5,10 @@
     font-variation-settings:
       "wdth" 100;
 }
+@font-face {
+    font-family: 'uifont';
+    src: url('./img/fonts/pixelFont-7-8x14-sproutLands.ttf');
+}
 body {
     background-color: #f4f4f4;
     margin: 0;
