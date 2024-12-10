@@ -5,7 +5,9 @@ inventoryimg.src = './img/emojis-free/emoji style ui/inventory_Light_example_wit
 export const inventory = {
     img: inventoryimg,
     inventory_index: 0,
-    inventory: [3, 1, 343, 92]
+    inventory: [3, 1, 343, 92],
+    wheat: 10,
+    beat: 10
 }
 
 export function drawInventory({ctx, canvas}) {
@@ -22,6 +24,6 @@ export function drawInventory({ctx, canvas}) {
     ctx.fillText(1, 34, canvas.height-100);
     ctx.strokeText(2, 34+96, canvas.height-100);
     ctx.fillText(2, 34+96, canvas.height-100);
-    // if ()
-    // ctx.fillText(, 80, canvas.height-20);
+    ctx.fillText(inventory.wheat, 97-10*inventory.wheat.toString().length, canvas.height-20);
+    ctx.fillText(inventory.beat, 97-10*inventory.beat.toString().length + 96, canvas.height-20);
 }
