@@ -1,6 +1,7 @@
 import { character } from './character.js';
 import { inventory } from './inventory.js';
 import { getLastWidthIndex, getLastHeightIndex } from './game.js';
+import { getCropLevel } from './crops.js';
 
 export const keyboardActions = [
     {
@@ -51,7 +52,12 @@ export const keyboardActions = [
             const characterWidthIndex = Math.floor((character.x + 34) / 68);
             const characterHeightIndex = Math.floor((character.y + 68) / 68);
             if (characterWidthIndex < 13 || characterWidthIndex > lastWidthIndex || characterHeightIndex < 1 || characterHeightIndex > lastHeightIndex) return;
-            if (character.seeds.some(seed => seed.x === characterWidthIndex && seed.y === characterHeightIndex)) return;
+            if (character.seeds.some(seed => seed.x === characterWidthIndex && seed.y === characterHeightIndex)) {
+                const seed = character.seeds.find(seed => seed.x === characterWidthIndex && seed.y === characterHeightIndex);
+                if (getCropLevel(seed.type, seed.grow) !== "full") return;
+                character.seeds = character.seeds.filter(seed => seed.x !== characterWidthIndex || seed.y !== characterHeightIndex);
+                return;
+            }
             if(inventory.inventory_number === 1) {
                 character.seeds.push({x: characterWidthIndex, y: characterHeightIndex, type: "wheat", grow: 0});
             }

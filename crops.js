@@ -16,31 +16,16 @@ export const crop = {
     beat_full: [64, 17, 13, 14]
 }
 
+export function getCropLevel(type,grow) {
+    const coefficient = type === "wheat" ? 1 : 1.5;
+    if(grow < 60*5*coefficient) return "seed";
+    if(grow < 60*10*coefficient) return "grow1";
+    if(grow < 60*15*coefficient) return "grow2";
+    return "full";
+}
+
 export function drawCrop({ctx}) {
     character.seeds.forEach(seed => {
-        switch(seed.type) {
-            case "wheat":
-                if(seed.grow === 0) {
-                    ctx.drawImage(crop.img, ...crop.wheat_seed, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 1) {
-                    ctx.drawImage(crop.img, ...crop.wheat_grow1, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 2) {
-                    ctx.drawImage(crop.img, ...crop.wheat_grow2, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 3) {
-                    ctx.drawImage(crop.img, ...crop.wheat_full, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                }
-                break;
-            case "beat":
-                if(seed.grow === 0) {
-                    ctx.drawImage(crop.img, ...crop.beat_seed, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 1) {
-                    ctx.drawImage(crop.img, ...crop.beat_grow1, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 2) {
-                    ctx.drawImage(crop.img, ...crop.beat_grow2, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                } else if(seed.grow === 3) {
-                    ctx.drawImage(crop.img, ...crop.beat_full, 10+(68*seed.x), 10+(68*seed.y), 68, 68);
-                }
-                break;
-        }
+        ctx.drawImage(crop.img, ...crop[seed.type+"_"+getCropLevel(seed.type,seed.grow)], 10+(68*seed.x), 10+(68*seed.y), 68, 68);
     });
 }

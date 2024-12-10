@@ -1,7 +1,7 @@
 import { drawGrass } from './grass.js';
-import { move, drawCharacter } from './character.js';
+import { move, drawCharacter, growSeeds } from './character.js';
 import { drawGround } from './ground.js';
-import { drawInventory, inventory } from './inventory.js';
+import { drawInventory } from './inventory.js';
 import { drawCrop } from './crops.js';
 import { keyboardActions } from './keyboard.js';
 
@@ -35,6 +35,7 @@ function init() {
     resize();
     window.setInterval(drawGame, 1000 / 60);
     window.setInterval(move(canvas), 1000 / 60);
+    window.setInterval(growSeeds, 1000 / 60);
 }
 
 function drawGame() {

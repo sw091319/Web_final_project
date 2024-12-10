@@ -54,6 +54,13 @@ export const move = (canvas) => () => {
     }
 }
 
+export function growSeeds() {
+    character.seeds.forEach(seed => {
+        if(seed.grow >= 60*60) return;
+        seed.grow++;
+    });
+}
+
 export function drawCharacter({ctx}) {
     character.tick=(character.tick+1)%50;
 
@@ -65,12 +72,6 @@ export function drawCharacter({ctx}) {
         return character.laststate + "_basic";
     }
 
-    if (character.tick < 25) {
-        ctx.drawImage(character.img, ...character[getDirection()+"1"], character.x, character.y, 68, 68);
-    } else {
-        ctx.drawImage(character.img, ...character[getDirection()+"2"], character.x, character.y, 68, 68);
-    }
-
     const lastWidthIndex = getLastWidthIndex();
     const lastHeightIndex = getLastHeightIndex();
     const characterWidthIndex = Math.floor((character.x + 34) / 68);
@@ -78,5 +79,11 @@ export function drawCharacter({ctx}) {
     if (characterWidthIndex >= 13 && characterWidthIndex <= lastWidthIndex && characterHeightIndex >= 1 && characterHeightIndex <= lastHeightIndex) {
         ctx.fillStyle = "rgba(80, 80, 255, 0.3)";
         ctx.fillRect(10+(68*characterWidthIndex), 10+(68*characterHeightIndex), 68, 68);
+    }
+
+    if (character.tick < 25) {
+        ctx.drawImage(character.img, ...character[getDirection()+"1"], character.x, character.y, 68, 68);
+    } else {
+        ctx.drawImage(character.img, ...character[getDirection()+"2"], character.x, character.y, 68, 68);
     }
 }
