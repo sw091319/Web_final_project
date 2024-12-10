@@ -1,4 +1,5 @@
 import { getLastWidthIndex, getLastHeightIndex } from './game.js';
+import { ingameUiLocation } from './ui.js';
 const characterimg = new Image();
 characterimg.src = './img/Characters/Basic Charakter Spritesheet.png';
 
@@ -12,6 +13,7 @@ export const character = {
     laststate : "front",
     tick : 0,
     seeds: [],
+    coin: 100,
     img: characterimg,
     front_basic1: [16, 15, 17, 17],
     front_basic2: [64, 15, 17, 17],
@@ -36,21 +38,32 @@ export const move = (canvas) => () => {
         character.x -= 4;
         //왼쪽 끝에 도달한 경우
         if(character.x < 20) character.x = 20;
+        
         //인벤토리에 겹치는 경우
-        if(character.y > canvas.height - 250 && character.x < 700) character.x = 700;
+        Object.values(ingameUiLocation(canvas)).forEach(location => {
+            if(character.x > location[0] && character.x < location[0] + location[2] && character.y > location[1] && character.y < location[1] + location[3]) character.x = location[0] + location[2];
+        });
     }
     if(character.right) {
         character.x += 4;
         if (character.x > canvas.width - 75) character.x = canvas.width - 75;
+        Object.values(ingameUiLocation(canvas)).forEach(location => {
+            if(character.x > location[0] && character.x < location[0] + location[2] && character.y > location[1] && character.y < location[1] + location[3]) character.x = location[0];
+        }); 
     }
     if(character.up) {
         character.y -= 4;
         if(character.y < 20) character.y = 20;
+        Object.values(ingameUiLocation(canvas)).forEach(location => {
+            if(character.x > location[0] && character.x < location[0] + location[2] && character.y > location[1] && character.y < location[1] + location[3]) character.y = location[1] + location[3];
+        });
     }
     if(character.down) {
         character.y += 4;
         if(character.y > canvas.height - 80) character.y = canvas.height - 80;
-        if(character.x < 650 && character.y > canvas.height - 255) character.y = canvas.height - 255;
+        Object.values(ingameUiLocation(canvas)).forEach(location => {
+            if(character.x > location[0] && character.x < location[0] + location[2] && character.y + 64 > location[1] && character.y + 64< location[1] + location[3]) character.y = location[1] - 64;
+        });
     }
 }
 
