@@ -1,14 +1,14 @@
+@font-face {
+    font-family: 'uifont';
+    src: url('./img/fonts/pixelFont-7-8x14-sproutLands.ttf');
+}
 * {
-    font-family: "Noto Sans", serif;
+    font-family: "uifont";
     font-optical-sizing: auto;
     font-style: normal;
     font-variation-settings:
       "wdth" 100;
     user-select: none;
-}
-@font-face {
-    font-family: 'uifont';
-    src: url('./img/fonts/pixelFont-7-8x14-sproutLands.ttf');
 }
 body {
     background-color: #f4f4f4;
@@ -22,7 +22,7 @@ header {
 header>h1 {
     font-size: 2.5em;
     margin: 0;
-    padding: 0;
+    padding: 10px 10px 0;
     text-align: center;
 }
 nav {
