@@ -4,10 +4,17 @@ require_once 'config.php';
 require_once 'auth.php';
 
 // Check if user is logged in
-// if (!is_logged_in()) {
-//     header('Location: login.php');
-//     exit;
-// }
+if (!is_logged_in()) {
+    header('Location: login.php');
+    exit;
+}
+
+//Logout user
+if (isset($_POST['logout'])) {
+    logout_user();
+    header('Location: login.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +27,15 @@ require_once 'auth.php';
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="game.js" type="module">
-        
+        impor
+        <?php
+            // Get user's coin count
+            $sql = "SELECT coin FROM user WHERE id = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id' => $_SESSION['user_id']]);
+            $coin = $stmt->fetchColumn();
+        ?>
+        const coin = <?php echo $coin; ?>;
     </script>
     <title>Final project</title>
 </head>
@@ -31,7 +46,10 @@ require_once 'auth.php';
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="login.php">Logout</a></li>
+                <li><a href="mypage.php">Mypage</a></li>
+                <form method="POST">
+                    <button id ="logout" type="submit" name="logout">Logout</button>
+                
             </ul>
         </nav>
     </header>

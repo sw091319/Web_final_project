@@ -27,3 +27,25 @@ $sql = "CREATE TABLE IF NOT EXISTS user (
     coin INT DEFAULT 10
 )";
 $pdo->exec($sql);
+
+// Create seed table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS seed (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    wheat INT DEFAULT 10,
+    beat INT DEFAULT 10,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)";
+$pdo->exec($sql);
+
+// Create farm if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS farm (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    x INT,
+    y INT,
+    seedType VARCHAR(50),
+    growLevel INT,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+)";
+$pdo->exec($sql);
