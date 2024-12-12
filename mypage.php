@@ -44,10 +44,16 @@ $farm = get_farmTable($pdo, $_SESSION['user_id']);
     </header>
 
     <main>
-        <span>hello! <?php echo $_SESSION['username']; ?></span>
-        <span>your coin : <?php echo $user['coin']; ?></span>
-        <span>your wheat seed : <?php echo $seed['wheat']; ?></span>
-        <span>your beat seed : <?php echo $seed['beat']; ?></span>
+        <div>      
+            <span>hello! <?php echo $_SESSION['username']; ?></span>
+            <span>your coin : <?php echo $user['coin']; ?></span>
+            <span>your wheat seed : <?php echo $seed['wheat']; ?></span>
+            <span>your beat seed : <?php echo $seed['beat']; ?></span>
+        </div>
+
+        <div>
+            <span>Use Asset : <a href="https://cupnooble.itch.io/sprout-lands-asset-pack" target = "_blank">https://cupnooble.itch.io/sprout-lands-asset-pack</a></span>
+        </div>
     </main>
 </body>
 </html>

@@ -71,7 +71,6 @@ $farm = get_farmTable($pdo, $_SESSION['user_id']);
                 e.target.appendChild(input);
             });
         });
-
     </script>
     <title>Growing a farm</title>
 </head>
