@@ -22,26 +22,16 @@ if (isset($_POST['logout'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="game.js" type="module">
-        impor
-        <?php
-            // Get user's coin count
-            $sql = "SELECT coin FROM user WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(['id' => $_SESSION['user_id']]);
-            $coin = $stmt->fetchColumn();
-        ?>
-        const coin = <?php echo $coin; ?>;
+    <script type="module">
+        import { setInitialValues, getValues } from './game.js';
+
+        //setInitialValues(<?php echo "1111,[111,111],[{x:3453,y:123,type:'wheat',grow:0},...]"; ?>);
     </script>
-    <title>Final project</title>
+    <title>Growing a farm</title>
 </head>
 <body>
     <header>
-        <!-- <img src="./img/logo.webp" alt="logo" weight="55px" height="55px"> -->
         <h1>Growing a farm</h1>
         <nav>
             <ul>

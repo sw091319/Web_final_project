@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'uifont';
+    src: url('./img/fonts/pixelFont-7-8x14-sproutLands.ttf');
+}
+* {
+    font-family: "uifont";
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+    user-select: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: rgb(196, 211, 125);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+header {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 0 0 10px;
+}
+header>h1 {
+    font-size: 2.5em;
+    margin: 0;
+    padding: 10px 10px 0;
+    text-align: center;
+}
+nav {
+    display: flex;
+    margin-left: auto;
+    padding: 10px 30px 0;
+    justify-items: center;
+    align-items: center;
+}
+nav>ul {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li>a {
+    color: #000;
+    text-decoration: none;
+    font-size: 110%;
+}
+
+#logout {
+    background-color: #f4f4f4;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 110%;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(196, 211, 125);
+}
