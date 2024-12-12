@@ -16,12 +16,9 @@ if (isset($_POST['logout'])) {
     exit;
 }
 
-function getSeed($pdo, $userid) {
-    $sql = "SELECT * FROM seed WHERE user_id = :user_id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(['user_id' => $userid]);
-    return $stmt->fetch();
-}
+$user = get_user($pdo, $_SESSION['user_id']);
+$seed = get_seedTable($pdo, $_SESSION['user_id']);
+$farm = get_farmTable($pdo, $_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -42,16 +39,15 @@ function getSeed($pdo, $userid) {
                 <form method="POST">
                     <button id ="logout" type="submit" name="logout">Logout</button>
                 </form>
-                <form method="POST">
-                    <button id ="save" type="submit" name="save">Save</button>
-                </form>
             </ul>
         </nav>
     </header>
 
     <main>
         <span>hello! <?php echo $_SESSION['username']; ?></span>
-        <span>your seed : <?php echo getSeed($pdo, $_SESSION['user_id']); ?>
+        <span>your coin : <?php echo $user['coin']; ?></span>
+        <span>your wheat seed : <?php echo $seed['wheat']; ?></span>
+        <span>your beat seed : <?php echo $seed['beat']; ?></span>
     </main>
 </body>
 </html>

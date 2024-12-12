@@ -8,7 +8,7 @@ export const character = {
     down : false,
     left : false,
     right : false,
-    x : 300,
+    x : 700,
     y : 300,
     laststate : "front",
     tick : 0,

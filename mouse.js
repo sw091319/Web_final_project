@@ -53,6 +53,7 @@ export const registerMouseActions = (mouse, draw) => {
             draw.unRegister(drawWheatUnclick);
         },
         click: () => {
+            if(character.coin < 1) return;
             character.coin -= 1;
             inventory.wheat += 1;
         }
@@ -64,6 +65,7 @@ export const registerMouseActions = (mouse, draw) => {
             draw.unRegister(drawBeatUnclick);
         },
         click: () => {
+            if(character.coin < 2) return;
             character.coin -= 2;
             inventory.beat += 1;
         }
