@@ -41,6 +41,10 @@ function getSeed($pdo, $userid) {
                 <li><a href="mypage.php">Mypage</a></li>
                 <form method="POST">
                     <button id ="logout" type="submit" name="logout">Logout</button>
+                </form>
+                <form method="POST">
+                    <button id ="save" type="submit" name="save">Save</button>
+                </form>
             </ul>
         </nav>
     </header>

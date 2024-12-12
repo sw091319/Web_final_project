@@ -54,7 +54,7 @@ li>a {
     font-size: 110%;
 }
 
-#logout {
+form>button {
     background-color: #f4f4f4;
     border: none;
     padding: 0;
