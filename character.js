@@ -1,4 +1,4 @@
-import { getLastWidthIndex, getLastHeightIndex } from './game.js';
+import { getLastWidthIndex, getLastHeightIndex } from './utils.js';
 import { ingameUiLocation } from './ui.js';
 const characterimg = new Image();
 characterimg.src = './img/Characters/Basic Charakter Spritesheet.png';
@@ -74,7 +74,7 @@ export function growSeeds() {
     });
 }
 
-export function drawCharacter({ctx}) {
+export function drawCharacter({ctx,canvas}) {
     character.tick=(character.tick+1)%50;
 
     function getDirection() {
@@ -85,8 +85,8 @@ export function drawCharacter({ctx}) {
         return character.laststate + "_basic";
     }
 
-    const lastWidthIndex = getLastWidthIndex();
-    const lastHeightIndex = getLastHeightIndex();
+    const lastWidthIndex = getLastWidthIndex(canvas);
+    const lastHeightIndex = getLastHeightIndex(canvas);
     const characterWidthIndex = Math.floor((character.x + 34) / 68);
     const characterHeightIndex = Math.floor((character.y + 68) / 68);
     if (characterWidthIndex >= 13 && characterWidthIndex <= lastWidthIndex && characterHeightIndex >= 1 && characterHeightIndex <= lastHeightIndex) {

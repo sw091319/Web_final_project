@@ -11,6 +11,7 @@ export const shopIcon = {
     buyUnclick: [162, 177, 253-162, 205-177],
     buyClick: [259, 179, 349-259, 205 - 179]
 }
+export const isShopOpen = {value: false};
 
 const shopBackgroundimg = new Image();
 shopBackgroundimg.src = './img/Sprite sheets/Setting menu.png';
@@ -54,6 +55,40 @@ export function drawShop({ctx, canvas}) {
     ctx.drawImage(shopBackground.emojiimg, ...shopBackground.emoji, ingameUiLocation(canvas).shop_ui[0] + 15 + 13*2.35, 495 + 13*2.35, shopBackground.emoji[2]*3.2, shopBackground.emoji[3]*2.5);
     ctx.font = "30px uifont";
     ctx.fillText("Comming Soon...", 360, 590)
+}
 
-    
+export function drawShopClicked({ctx, canvas}) {
+    ctx.drawImage(shopIcon.img, ...shopIcon.shopClick, 10 + ingameUiLocation(canvas).coin_ui[2] + 10, 12, (795-772)*3, (124-99)*3);
+}
+
+export function drawShopUnclick({ctx, canvas}) {
+    ctx.drawImage(shopIcon.img, ...shopIcon.shopUnclick, 10 + ingameUiLocation(canvas).coin_ui[2] + 10, 10, (795-772)*3, (124-99)*3);
+}
+
+export function drawWheatClicked({ctx, canvas}) {
+    ctx.drawImage(shopIcon.img, ...shopIcon.buyClick, 480, 234, shopIcon.buyClick[2], shopIcon.buyClick[3]*2);
+    ctx.font = "30px uifont";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillText("Buy", 480 + 23, 234 + 39);
+}
+
+export function drawBeatClicked({ctx, canvas}) {
+    ctx.drawImage(shopIcon.img, ...shopIcon.buyClick, 480, 234 + 253-95, shopIcon.buyClick[2], shopIcon.buyClick[3]*2);
+    ctx.font = "30px uifont";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillText("Buy", 480 + 23, 234 + 39 + 253-95);
+}
+
+export function drawWheatUnclick({ctx, canvas}) {
+    ctx.drawImage(shopIcon.img, ...shopIcon.buyUnclick, 480, 234, shopIcon.buyUnclick[2], shopIcon.buyUnclick[3]*2);
+    ctx.font = "30px uifont";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillText("Buy", 480 + 23, 234 + 39);
+}
+
+export function drawBeatUnclick({ctx, canvas}) {
+    ctx.drawImage(shopIcon.img, ...shopIcon.buyUnclick, 480, 234 + 253-95, shopIcon.buyUnclick[2], shopIcon.buyUnclick[3]*2);
+    ctx.font = "30px uifont";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillText("Buy", 480 + 23, 234 + 39 + 253-95);
 }

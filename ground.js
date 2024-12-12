@@ -1,4 +1,4 @@
-import { getLastWidthIndex, getLastHeightIndex } from './game.js';
+import { getLastWidthIndex, getLastHeightIndex } from './utils.js';
 const groundimg = new Image();
 groundimg.src = './img/Tilesets/Tilled_Dirt.png';
 
@@ -15,9 +15,9 @@ export const ground = {
     rightBottom: [31, 31, 14, 14]
 }
 
-export function drawGround({ctx}) {
-    const lastWidthIndex = getLastWidthIndex();
-    const lastHeightIndex = getLastHeightIndex();
+export function drawGround({ctx, canvas}) {
+    const lastWidthIndex = getLastWidthIndex(canvas);
+    const lastHeightIndex = getLastHeightIndex(canvas);
     function getHorizontal(x) {
         if(x === 13) return "left";
         if(x === lastWidthIndex) return "right";
